@@ -1,0 +1,14 @@
+
+server:
+  port: 7001
+
+#eureka:
+#  client:
+#      #不要自己注册自己以及自己就是服务端
+#      registerWithEureka: false
+#      fetchRegistry: false
+#  service-url:
+#      defaultZone: http://${server.hostname}:${server.port}/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    instance-id: microservicecloud-eureka-7001

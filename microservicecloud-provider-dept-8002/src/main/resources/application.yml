@@ -1,0 +1,55 @@
+server:
+  port: 8002
+
+mybatis:
+  mapper-locations: mappers/*.xml
+#  config-location: mybatis-config.xml
+
+spring:
+  #注册服务的名字
+  application:
+      name: microservicecloud-dept
+
+  datasource:
+
+      #type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql:///cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+      username: root
+      password: 782755046
+      driver-class-name: com.mysql.cj.jdbc
+
+logging:
+  #指定日志的等级，可以对不同包采用不同的等级，比如如下配置就是将root的等级设置为info，将com.example设置为debug
+  level: {root: info,com.example: debug}
+  #file是设置日志的输出的路径，这里需要注意的是file和path属性只能选一个，不能同时存在
+  #file: log.log
+
+
+
+
+#客户端注册eurka
+
+#eureka:
+#    client:
+#       service-url:
+#            defaultZone: http://localhost:7001/
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id:  ${spring.application.name}(${spring.cloud.client.ip-address}:${server.port})
+    lease-renewal-interval-in-seconds: 10
+  client:
+    service-url:
+      #defaultZone:   http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka
+
+
+
+
+# $没起作用
+info:
+  app.name: zzy-microservicecloud
+  company.name: zzyzzy.top
+  build.artiffactId: $project.artifactId$
+  build.version: $project.version$

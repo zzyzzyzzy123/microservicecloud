@@ -1,0 +1,38 @@
+server:
+  port: 9527
+
+mybatis:
+  mapper-locations: mappers/*.xml
+#  config-location: mybatis-config.xml
+
+spring:
+  #注册服务的名字
+  application:
+      name: microservicecloud-zuul-gateway-9527
+
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id:  ${spring.application.name}(${spring.cloud.client.ip-address}:${server.port})
+    lease-renewal-interval-in-seconds: 10
+  client:
+    service-url:
+      #defaultZone:   http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka
+#zuul映射地址
+zuul:
+  routes:
+    mydept.serviceid: microservicecloud-dept
+    mydept.path: /mydept/**
+  ignored-services: microservicecloud-dept
+  prefix: /zzy
+
+# $没起作用
+info:
+  app.name: zzy-microservicecloud
+  company.name: zzyzzy.top
+  build.artiffactId: $project.artifactId$
+  build.version: $project.version$
+

@@ -1,0 +1,47 @@
+package top.zzy.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.bind.annotation.*;
+import top.zzy.entity.Dept;
+import top.zzy.service.DeptService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("dept")
+public class DeptController {
+	@Autowired
+	DeptService deptServiceImpl;
+	@Autowired
+    private DiscoveryClient discoveryClient;
+
+	@RequestMapping(value = "add", method = RequestMethod.POST)
+	public boolean add(@RequestBody Dept dept) {
+
+		return deptServiceImpl.add(dept);
+	}
+
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	public Dept get(@PathVariable Integer id) {
+
+		return deptServiceImpl.get(id);
+	}
+
+	@RequestMapping(value = "list", method = RequestMethod.GET)
+	public List<Dept> lsit() {
+		return deptServiceImpl.list();
+	}
+
+	@RequestMapping(value = "/discovery",method = RequestMethod.GET)
+    public Object discover(){
+        List<String> services = discoveryClient.getServices();
+        System.out.println(services);
+        List<ServiceInstance> instances = discoveryClient.getInstances("microservicecloud-dept");
+        for (ServiceInstance instance:instances) {
+            System.out.println(instance.getHost()+":"+instance.getPort()+"\n"+instance.getUri());
+        }
+        return discoveryClient;
+    }
+}
