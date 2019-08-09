@@ -1,0 +1,18 @@
+server:
+  port: 3344
+
+
+spring:
+  application:
+    name: microservicecloud-config
+  cloud:
+    config:
+      server:
+        git:
+          uri:  https://github.com/zzyzzyzzy123/microservicecloud-config-git.git
+          #uri: git@github.com/zzyzzyzzy123/microservicecloud-config-git
+          username: 782755046@qq.com
+          password: zz782755046=
+          basedir: D:\zzysoftware\Git\repository\microservicecloud-config-git
+      label: master
+      profile: dev
